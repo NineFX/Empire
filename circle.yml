@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: kalilinux/kali-linux-docker
+    working_directory: ~/
     steps:
       - checkout
       - run:
