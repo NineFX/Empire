@@ -1,0 +1,11 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: kalilinux/kali-linux-docker
+    working_directory: ~/
+    steps:
+      - checkout
+      - run:
+          name: install
+          command: 'sudo -H ./setup/install.sh'
