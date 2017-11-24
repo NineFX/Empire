@@ -1,0 +1,37 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/Empire
+    docker:
+      - image: ninefx/kali-empire-base
+    steps:
+      - checkout
+      - run:
+          name: "Install Empire"
+          command: |
+              STAGING_KEY=dummy ./setup/install.sh
+              rm data/empire-priv.key data/empire-chain.pem 
+              openssl req -new -x509 -keyout data/empire-priv.key -out data/empire-chain.pem -days 365 -nodes -subj "/CN=localhost/O=Empire/C=US" >/dev/null 2>&1
+      - run:
+          name: "Integration Tests"
+          command: |
+              pip install --upgrade unittest-xml-reporting
+              ./empire --headless --username empireadmin --password empire &
+              python -m xmlrunner discover
+      - run:
+          name: "Move test report"
+          command: |
+            mkdir -p test_reports
+            mv TEST*.xml test_reports
+      - store_test_results:
+          path: test_reports/
+      - run:
+          name: "lint Python"
+          command: |
+              set +e
+              pip install --upgrade pycodestyle
+              pycodestyle lib/ test/ > pycodestyle.txt
+              true
+      - store_artifacts:
+          path: pycodestyle.txt
+          destination: pycodestyle.txt

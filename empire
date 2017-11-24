@@ -1303,8 +1303,7 @@ def start_restful_api(empireMenu, suppress=False, username=None, password=None, 
     app.run(host='0.0.0.0', port=int(port), ssl_context=context, threaded=True)
 
 
-if __name__ == '__main__':
-
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     generalGroup = parser.add_argument_group('General Options')

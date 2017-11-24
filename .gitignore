@@ -13,3 +13,5 @@ data/misc/Obfuscated.ps1
 setup/xar*
 setup/bomutils/*
 .venv
+setup/get-pip.py
+

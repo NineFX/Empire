@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [[ $EUID -ne 0 ]]; then
    echo " [!]This script must be run as root" 1>&2
    exit 1
@@ -152,10 +154,6 @@ else
          mkdir -p /usr/local/share/powershell/Modules
          cp -r ../lib/powershell/Invoke-Obfuscation /usr/local/share/powershell/Modules
 fi
-tar -xvf ../data/misc/xar-1.5.2.tar.gz
-(cd xar-1.5.2 && ./configure)
-(cd xar-1.5.2 && make)
-(cd xar-1.5.2 && make install)
 git clone https://github.com/hogliux/bomutils.git
 (cd bomutils && make)
 (cd bomutils && make install)
